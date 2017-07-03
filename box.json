@@ -1,0 +1,17 @@
+{
+    "name":"FW1QB",
+    "version":"0.1.0",
+    "author":"Tony Junkes",
+    "slug":"FW1QB",
+    "shortDescription":"Playing with QB inside an FW/1 App",
+    "description":"Playing with QB inside an FW/1 App",
+    "instructions":"Drop it in, fire up Commandbox and do server start and go!",
+    "dependencies":{
+        "QB":"x",
+        "fw1":"4.1.0"
+    },
+    "installPaths":{
+        "QB":"subsystems/qb/",
+        "fw1":"framework"
+    }
+}
