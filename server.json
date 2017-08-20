@@ -1,5 +1,6 @@
 {
     "web":{
+        "webroot":"app",
         "rewrites":{
             "enable":true
         }
