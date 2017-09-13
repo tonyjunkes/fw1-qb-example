@@ -1,6 +1,6 @@
 # FW/1 folder
-framework
+src/framework
 # Ignore H2 files
-model/**.db
+src/model/*.db
 # Ignore the QB lib
-subsystems/qb
+src/subsystems/qb

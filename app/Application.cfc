@@ -44,15 +44,15 @@ component extends="../src/framework/one"
 				}
 			}
 		},
-        trace = true,
-        reloadApplicationOnEveryRequest = true
+        trace: true,
+        reloadApplicationOnEveryRequest: true
 	};
 
 	public void function setupRequest() {
 		getBeanFactory().getBean("DataService").create();
 	}
 
-	public string function onMissingView(struct rc = {}) {
+	public string function onMissingView(struct rc) {
 		return "Error 404 - Page not found.";
 	}
 }
