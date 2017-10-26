@@ -30,14 +30,14 @@ component displayname="FW/1 Life Cycle Bootstrap" extends="framework.one"
 					   .declare("QueryUtils").instanceOf("qb.models.Query.QueryUtils").done()
 					   .declare("QueryBuilder").instanceOf("qb.models.Query.QueryBuilder")
 					   .withOverrides({
-							grammar: di1.getBean("MySQLGrammar"),
-							utils: di1.getBean("QueryUtils"),
-							returnFormat: "array"
+						   grammar: di1.getBean("MySQLGrammar"),
+						   utils: di1.getBean("QueryUtils"),
+						   returnFormat: "array"
 						}).done()
 					   .declare("SchemaBuilder").instanceOf("qb.models.Schema.SchemaBuilder")
 					   .asTransient()
 					   .withOverrides({
-							grammar: di1.getBean("MySQLGrammar")
+						   grammar: di1.getBean("MySQLGrammar")
 						});
 				}
 			}
