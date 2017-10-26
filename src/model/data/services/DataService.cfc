@@ -1,63 +1,80 @@
 component displayname="Database Service"
+    accessors=true
     output=false
 {
-    DataService function init() {
-        return this;
-    }
+    property SchemaBuilder;
+    property QueryBuilder;
 
     void function create() {
-        queryExecute("
-            -- ----------------------------
-            -- Table structure for posts
-            -- ----------------------------
-            CREATE TABLE IF NOT EXISTS `posts` (
-                `PostID` int(11) NOT NULL AUTO_INCREMENT,
-                `CreateDate` datetime DEFAULT NULL,
-                `ModifyDate` datetime DEFAULT NULL,
-                `PublishDate` datetime DEFAULT NULL,
-                `Slug` varchar(255) DEFAULT NULL,
-                `Title` varchar(255) DEFAULT NULL,
-                `Body` longtext,
-                `ViewCount` int(11) DEFAULT NULL,
-                `Active` tinyint(1) DEFAULT NULL,
-                `IsDraft` tinyint(1) DEFAULT NULL,
-                `UserID` int(11) DEFAULT NULL,
-                `Keywords` varchar(255) DEFAULT NULL,
-                `Description` varchar(255) DEFAULT NULL,
-                PRIMARY KEY (`PostID`)
-            );
-            -- ----------------------------
-            -- Table structure for users
-            -- ----------------------------
-            CREATE TABLE IF NOT EXISTS `authors` (
-                `UserID` int(11) NOT NULL AUTO_INCREMENT,
-                `FirstName` varchar(255) DEFAULT NULL,
-                `LastName` varchar(255) DEFAULT NULL,
-                `UserName` varchar(255) DEFAULT NULL,
-                `Password` varchar(60) DEFAULT NULL,
-                `CreateDate` datetime DEFAULT NULL,
-                `ModifyDate` datetime DEFAULT NULL,
-                `Active` tinyint(1) DEFAULT NULL,
-                PRIMARY KEY (`UserID`)
-            );
-        ");
+        // Authors
+        if (!SchemaBuilder.hasTable("authors")) {
+            SchemaBuilder.create("authors", function(table) {
+                table.increments("UserID");
+                table.string("FirstName", 150);
+                table.string("LastName", 150);
+                table.string("Username");
+                table.string("Password", 60);
+                table.timestamp("CreateDate");
+                table.timestamp("ModifyDate");
+                table.bit("Active");
+            });
+        }
+
+        // Posts
+        if (!SchemaBuilder.hasTable("posts")) {
+            SchemaBuilder.create("posts", function(table) {
+                table.increments("PostID");
+                table.string("Slug");
+                table.string("Title");
+                table.longText("Body");
+                table.integer("ViewCount");
+                table.string("Keywords");
+                table.string("Description");
+                table.timestamp("CreateDate");
+                table.timestamp("ModifyDate");
+                table.timestamp("PublishDate");
+                table.bit("IsDraft");
+                table.bit("Active");
+                table.unsignedInteger("UserID").references("UserID").onTable("authors");
+            });
+        }
     }
 
     void function populate() {
-        queryExecute("
-            -- ----------------------------
-            -- Records of posts
-            -- ----------------------------
-            INSERT INTO `posts` VALUES ((SELECT COUNT(PostID) FROM posts + 1), NOW(),NOW(),NOW(),'test','Test','This is a test.',0,1,0,1,'','');
+        // Author
+        QueryBuilder.from("authors").insert(
+            values = {
+                firstname: "John",
+                lastname: "Doe",
+                username: "jdoe",
+                password: "tvBvOpODv4BiPGwCcPFeenYIVFis6LuDgqX",
+                createdate: now(),
+                modifydate: now(),
+                active: 1
+            }
+        );
 
-            -- ----------------------------
-            -- Records of users
-            -- ----------------------------
-            INSERT INTO `authors` VALUES ((SELECT COUNT(UserID) FROM authors + 1), 'John', 'Doe', 'jdoe', 'tvBvOpODv4BiPGwCcPFeenYIVFis6LuDgqX', '2015-01-27 19:03:17', '2015-02-13 12:46:19', '1');
-        ");
+        // Post
+        QueryBuilder.from("posts").insert(
+            values = {
+                slug: "test",
+                title: "Test",
+                body: "This is a test.",
+                viewcount: 0,
+                keywords: "",
+                description: "",
+                createdate: now(),
+                modifydate: now(),
+                publishdate: now(),
+                isdraft: 0,
+                active: 1,
+                userid: 1
+            }
+        );
     }
 
     void function clear() {
-        queryExecute("DROP ALL OBJECTS DELETE FILES;");
+        SchemaBuilder.dropIfExists("posts");
+        SchemaBuilder.dropIfExists("authors");
     }
 }
