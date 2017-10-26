@@ -16,7 +16,7 @@ component displayname="FW/1 Life Cycle Bootstrap" extends="framework.one"
 				   .declare("SchemaBuilder").asValue(getBeanFactory("qb").getBean("SchemaBuilder"));
 			}
 		},
-        routes: [
+		routes: [
 			{ "/db/populate" = "/database/populate" },
 			{ "/db/clear" = "/database/clear" },
 			{ "/" = "/main/default" }
@@ -25,25 +25,25 @@ component displayname="FW/1 Life Cycle Bootstrap" extends="framework.one"
 			qb.diLocations: ["/models"],
 			qb.diConfig: {
 				loadListener: function(di1) {
-	        		di1.declare("BaseGrammar").instanceOf("qb.models.Grammars.BaseGrammar").done()
-	        		   .declare("MySQLGrammar").instanceOf("qb.models.Grammars.MySQLGrammar").done()
-	        		   .declare("QueryUtils").instanceOf("qb.models.Query.QueryUtils").done()
-	        		   .declare("QueryBuilder").instanceOf("qb.models.Query.QueryBuilder")
-		        	   .withOverrides({
-	        				grammar: di1.getBean("MySQLGrammar"),
-	        				utils: di1.getBean("QueryUtils"),
-	        				returnFormat: "array"
+					di1.declare("BaseGrammar").instanceOf("qb.models.Grammars.BaseGrammar").done()
+					   .declare("MySQLGrammar").instanceOf("qb.models.Grammars.MySQLGrammar").done()
+					   .declare("QueryUtils").instanceOf("qb.models.Query.QueryUtils").done()
+					   .declare("QueryBuilder").instanceOf("qb.models.Query.QueryBuilder")
+					   .withOverrides({
+							grammar: di1.getBean("MySQLGrammar"),
+							utils: di1.getBean("QueryUtils"),
+							returnFormat: "array"
 						}).done()
-	        		   .declare("SchemaBuilder").instanceOf("qb.models.Schema.SchemaBuilder")
+					   .declare("SchemaBuilder").instanceOf("qb.models.Schema.SchemaBuilder")
 					   .asTransient()
-		        	   .withOverrides({
+					   .withOverrides({
 							grammar: di1.getBean("MySQLGrammar")
 						});
 				}
 			}
 		},
-        trace: true,
-        reloadApplicationOnEveryRequest: true
+		trace: true,
+		reloadApplicationOnEveryRequest: true
 	};
 
 	public void function setupRequest() {

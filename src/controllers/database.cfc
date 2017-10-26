@@ -1,14 +1,14 @@
 component displayname="Database Controller" accessors=true
-    output=false
+	output=false
 {
-    property DataService;
-    property framework;
+	property DataService;
+	property framework;
 
-    void function populate(struct rc) {
-		  DataService.populate();
-    }
+	void function populate(struct rc) {
+		DataService.populate();
+	}
 
-    void function clear(struct rc) {
-		  DataService.clear();
-    }
+	void function clear(struct rc) {
+		DataService.clear();
+	}
 }
