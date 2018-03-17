@@ -1,8 +1,8 @@
 # FW/1 & QB Example
 An example of using QB as a Subsystem in an FW/1 application.
 
-http://tonyjunkes.com/blog/working-with-fw1-and-qb/
-http://tonyjunkes.com/blog/fw1-and-qb-schema-builder/
+- http://tonyjunkes.com/blog/working-with-fw1-and-qb/
+- http://tonyjunkes.com/blog/fw1-and-qb-schema-builder/
 
 ### How to use:
 
